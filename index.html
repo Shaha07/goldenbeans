@@ -12,111 +12,62 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#0f0f10;
-      --card:#0f1113;
-      --muted:#cbd5e1;
-      --accent:#f6c85f;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --glass-3: rgba(255,255,255,0.06);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:Inter,system-ui,Arial;color:#e6e7ea;background:linear-gradient(180deg,#060607 0%, #0f1113 55%);line-height:1.5;
-      background-image: radial-gradient(circle at 10% 10%, rgba(246,200,95,0.03), transparent 10%), radial-gradient(circle at 90% 70%, rgba(108,92,231,0.02), transparent 15%);
-      padding-bottom:80px;
-    }
+  /* --- Quick visual fix: stronger contrast, reduced shadows, readable text --- */
+:root{
+  --bg:#0b0b0c;           /* page background */
+  --panel:#0f1112;        /* panel background */
+  --card-bg: rgba(255,255,255,0.03);
+  --text:#eef0f2;         /* main text */
+  --muted:#bfcad6;        /* muted text */
+  --accent:#f6c85f;       /* gold accent */
+  --shadow-weak: 0 6px 18px rgba(2,2,8,0.45);
+  --shadow-soft: 0 8px 20px rgba(2,2,8,0.45);
+}
 
-    .wrap{max-width:1100px;margin:28px auto;padding:0 20px}
+/* Ensure solid base color (fixes browsers that ignore background-image or blur) */
+html,body{height:100%;background-color:var(--bg); color:var(--text); margin:0; font-family:Inter,system-ui,Arial, sans-serif;}
 
-    header{
-      display:flex;align-items:center;justify-content:space-between;padding:18px 0;
-    }
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#f6c85f,#e09f3e);display:grid;place-items:center;color:#111;font-weight:700;box-shadow:0 6px 28px rgba(240,200,90,0.12);}
-    nav{display:flex;gap:12px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:500}
-    nav a.cta{background:linear-gradient(90deg, rgba(246,200,95,0.12), rgba(246,200,95,0.06));color:var(--accent);box-shadow:0 6px 22px rgba(246,200,95,0.06);}
+/* Panels / containers */
+.wrap{max-width:1100px;margin:28px auto;padding:0 20px}
+.panel, .card{
+  background-color: var(--panel);
+  border-radius:12px;
+  padding:18px;
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: none; /* disable if causes blur issues */
+}
 
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:18px}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:14px;backdrop-filter: blur(6px);box-shadow:0 8px 30px rgba(2,2,8,0.6)}
+/* Cards smaller shadow and smoother hover */
+.card{box-shadow: var(--shadow-weak); transition: transform .22s ease, box-shadow .22s ease;}
+.card:hover{transform:translateY(-6px); box-shadow: 0 18px 40px rgba(2,2,8,0.55);}
 
-    .hero h2{margin:0 0 8px;font-size:34px}
-    .lead{color:var(--muted);margin:0 0 18px}
-    .actions{display:flex;gap:12px}
-    .btn{border:0;padding:12px 16px;border-radius:12px;font-weight:600;cursor:pointer}
-    .btn-primary{background:linear-gradient(90deg,#f6c85f,#e09f3e);color:#111;box-shadow:0 10px 30px rgba(224,159,62,0.18)}
-    .btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+/* Headings and text color overrides */
+h1,h2,h3,h4 { color: var(--text); margin:0 0 8px; }
+.muted, p.muted { color: var(--muted); }
 
-    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,2,8,0.6);transition:transform .25s,box-shadow .25s}
-    .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(2,2,8,0.7)}
-    .thumb{height:140px;border-radius:10px;overflow:hidden;margin-bottom:12px}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .tag{background:rgba(0,0,0,0.45);padding:6px 8px;border-radius:8px;color:var(--accent);font-weight:700;font-size:12px}
-    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+/* Buttons — visible on any background */
+.btn{border:0;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn-primary{background: linear-gradient(90deg,var(--accent),#e09f3e); color:#111; box-shadow: 0 8px 24px rgba(224,159,62,0.16);}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
 
-    footer{text-align:center;color:var(--muted);margin-top:36px}
+/* Fix logo and header contrast */
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#e09f3e);display:grid;place-items:center;color:#111;font-weight:800;box-shadow:0 8px 26px rgba(224,159,62,0.10)}
 
-    .modal-backdrop{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.7));display:none;align-items:center;justify-content:center;padding:20px;z-index:1200}
-    .modal{max-width:560px;background:linear-gradient(180deg,#0b0b0c,#0f1112);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.04)}
+/* Make background accents subtle or remove if causing washed look */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:transparent;}
 
-    @media(max-width:880px){.hero{grid-template-columns:1fr}nav{display:none}}
+/* Images: ensure full color and contained */
+.thumb img, .panel img { width:100%; height:100%; object-fit:cover; display:block; filter: none; }
 
-    .muted{color:var(--muted)}
-    .appear{opacity:0;transform:translateY(8px);animation:fade .6s forwards}
-    @keyframes fade{to{opacity:1;transform:none}}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">GB</div>
-        <div>
-          <h1>Golden Beans</h1>
-          <p class="muted">Elite & Rare Coffee — small batch roasting</p>
-        </div>
-      </div>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#products">Varieties</a>
-        <a href="#process">Process</a>
-        <a class="cta" href="#contacts">Contacts</a>
-      </nav>
-    </header>
+/* Ensure nav visible on mobile if it was hidden */
+@media (max-width:880px){
+  nav{display:flex; gap:10px; flex-wrap:wrap;}
+  .hero{grid-template-columns:1fr;}
+}
 
-    <section class="hero">
-      <div class="panel">
-        <h2>Rare micro-lots. Artisan roasting.</h2>
-        <p class="lead">We select and roast rare beans in small batches for those who appreciate clarity and aroma.</p>
-        <div class="actions">
-          <button class="btn btn-primary" id="orderNow">Order Coffee</button>
-          <button class="btn btn-ghost" id="learnMore">Learn More</button>
-        </div>
-      </div>
-
-      <aside class="panel">
-        <h3>Best Offers</h3>
-        <div class="products">
-          <article class="card">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Gesha"></div>
-            <div class="tag">Limited</div>
-            <h4>Gesha Peak — Panama</h4>
-            <p class="muted">Apple acidity, jasmine sweetness.</p>
-            <div class="meta"><span>$34 / 250g</span><button class="btn btn-primary" data-product="Gesha Peak">Buy</button></div>
-          </article>
-
-          <article class="card">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93" alt="Yirgacheffe"></div>
-            <div class="tag">Microlot</div>
-            <h4>Yirgacheffe — Ethiopia</h4>
-            <p class="muted">Bright citrus, honey notes.</p>
-            <div class="meta"><span>$26 / 250g</span><button class="btn btn-primary" data-product="Yirgacheffe">Buy</button></div>
-          </article>
-
-          <article class="card">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772" alt="SL-34"></div>
-            <div class="tag">Reserve
+/* Small helpers */
+.muted{color:var(--muted)}
+.flex{display:flex;gap:8px;align-items:center}
